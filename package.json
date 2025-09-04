@@ -1,15 +1,27 @@
 {
   "name": "02-api-rest-nodejs",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.34.0",
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "httpie": "^1.1.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "fastify": "^5.5.0"
   }
 }

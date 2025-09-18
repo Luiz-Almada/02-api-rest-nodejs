@@ -7,6 +7,12 @@ import cookie from '@fastify/cookie'
 const app = fastify()
 
 app.register(cookie)
+
+// exemplo de hook global no Fastify: aqui funciona para todas as rotas registradas
+/* app.addHook('preHandler', async (request) => {
+  console.log(`[${request.method}] ${request.url}`) // Log de requisições
+}) */
+
 app.register(transactionsRoute, {
   prefix: 'transactions',
 })

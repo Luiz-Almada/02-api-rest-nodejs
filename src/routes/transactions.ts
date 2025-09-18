@@ -5,6 +5,13 @@ import { knexQB } from '../database'
 import { checkSessionIdExist } from '../middlewares/check-session-id-exist'
 
 export async function transactionsRoute(app: FastifyInstance) {
+  /* 
+  // exemplo de hook global no Fastify: aqui funciona somente para esta rota
+  app.addHook('preHandler', async (request) => {
+  console.log(`[${request.method}] ${request.url}`) // Log de requisições
+  })
+  */
+
   app.get(
     '/',
     {

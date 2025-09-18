@@ -1,10 +1,12 @@
 import fastify from 'fastify'
 import { env } from './env'
 import { transactionsRoute } from './routes/transactions'
+import cookie from '@fastify/cookie'
 
 // app ou server
 const app = fastify()
 
+app.register(cookie)
 app.register(transactionsRoute, {
   prefix: 'transactions',
 })

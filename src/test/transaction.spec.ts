@@ -49,12 +49,79 @@ describe('Transactions routes', () => {
       .set('Cookie', cookies) // seta o cookie na requisição
       .expect(200)
 
-    console.log(listTransactionsResponse.body)
+    // console.log(listTransactionsResponse.body)
     expect(listTransactionsResponse.body.transactions).toEqual([
       expect.objectContaining({
         title: 'New Transaction',
         amount: 5000,
       }),
     ])
+  })
+
+  it('should be able to get a especific transaction', async () => {
+    const createTransactionResponse = await request(app.server)
+      .post('/transactions')
+      .send({
+        title: 'New Transaction',
+        amount: 5000,
+        type: 'credit',
+      })
+
+    // Verificação de tipo com operador de coalescência nula
+    const cookies = createTransactionResponse.get('Set-Cookie') ?? []
+
+    const listTransactionsResponse = await request(app.server)
+      .get('/transactions')
+      .set('Cookie', cookies) // seta o cookie na requisição
+      .expect(200)
+
+    // console.log(listTransactionsResponse.body)
+
+    const transactionId = listTransactionsResponse.body.transactions[0].id
+
+    const getTransactionResponse = await request(app.server)
+      .get(`/transactions/${transactionId}`)
+      .set('Cookie', cookies) // seta o cookie na requisição
+      .expect(200)
+
+    expect(getTransactionResponse.body.transaction).toEqual(
+      expect.objectContaining({
+        title: 'New Transaction',
+        amount: 5000,
+      }),
+    )
+  })
+
+  it('should be able to get the summary', async () => {
+    const createTransactionResponseCredit = await request(app.server)
+      .post('/transactions')
+      .send({
+        title: 'Credit Transaction',
+        amount: 5000,
+        type: 'credit',
+      })
+
+    // Verificação de tipo com operador de coalescência nula
+    const cookies = createTransactionResponseCredit.get('Set-Cookie') ?? []
+
+    await request(app.server)
+      .post('/transactions')
+      .set('Cookie', cookies) // seta o cookie na requisição
+      .send({
+        title: 'Debit Transaction',
+        amount: 2000,
+        type: 'debit',
+      })
+
+    const summaryResponse = await request(app.server)
+      .get('/transactions/summary')
+      .set('Cookie', cookies) // seta o cookie na requisição
+      .expect(200)
+
+    // console.log(listTransactionsResponse.body)
+
+    expect(summaryResponse.body.summary).toEqual({
+      amount: 3000,
+    })
   })
 })

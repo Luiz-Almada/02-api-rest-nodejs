@@ -1,5 +1,12 @@
-import 'dotenv/config'
+// import 'dotenv/config'
+import { config } from 'dotenv'
 import { z } from 'zod'
+
+if (process.env.NODE_ENV === 'test') {
+  config({ path: '.env.test' })
+} else {
+  config()
+}
 
 // Bibliotecas de validação Joi, Yup, Zod
 // O Zod leva vantagem por ter uma integração melhor com o TS

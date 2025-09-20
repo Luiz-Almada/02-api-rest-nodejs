@@ -9,8 +9,8 @@
     "target": "es2022", // Atualizado para Node 22
     
     // File Layout - Habilitando os diretórios
-    "rootDir": "./src",
-    "outDir": "./dist",
+    //"rootDir": "./src",
+    //"outDir": "./build",
         
     // For nodejs:
     "lib": ["es2022"], // Atualizado para Node 22
